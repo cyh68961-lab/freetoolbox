@@ -1,14 +1,188 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FreeToolBox - 免费在线工具集</title>
 <meta name="description" content="免费的在线实用工具集：图片压缩、JSON格式化、字数统计、Base64编解码、UUID生成、颜色转换、二维码生成。无需下载，无需注册。">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+
+
+
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+/* ===== Reset & Base ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:#f5f7fa;color:#1a1a2e;line-height:1.6;min-height:100vh
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* ===== Header ===== */
+.site-header{
+  background:#fff;border-bottom:1px solid #e8ecf1;
+  position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);
+  background:rgba(255,255,255,.92)
+}
+.site-header .container{
+  display:flex;align-items:center;justify-content:space-between;height:60px
+}
+.logo{font-size:1.35rem;font-weight:700;color:#1a1a2e}
+.logo span{color:#6366f1}
+.main-nav{display:flex;gap:8px}
+.nav-link{padding:6px 14px;border-radius:8px;font-size:.9rem;font-weight:500;color:#64748b;transition:.2s}
+.nav-link:hover,.nav-link.active{background:#6366f1;color:#fff}
+
+/* ===== Mobile Menu ===== */
+.mobile-menu-btn{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:6px}
+.mobile-menu-btn span{display:block;width:22px;height:2.5px;background:#1a1a2e;border-radius:2px;transition:.3s}
+
+/* ===== Hero ===== */
+.hero{text-align:center;padding:60px 0 20px}
+.hero h1{font-size:2.5rem;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{color:#64748b;font-size:1.1rem;margin-bottom:40px}
+
+/* ===== Tool Grid ===== */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto}
+.tool-card{
+  background:#fff;border:1px solid #e8ecf1;border-radius:14px;
+  padding:24px 20px;text-align:center;cursor:pointer;transition:all .25s ease
+}
+.tool-card:hover{
+  transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.08);border-color:#6366f1
+}
+.tool-icon{
+  font-size:2rem;font-weight:700;margin-bottom:10px;
+  display:flex;align-items:center;justify-content:center;
+  width:56px;height:56px;margin:0 auto 12px;border-radius:14px;
+  background:linear-gradient(135deg,#eef2ff,#e0e7ff);color:#6366f1
+}
+.tool-card h3{font-size:1rem;font-weight:600;margin-bottom:4px}
+.tool-card p{font-size:.82rem;color:#64748b;line-height:1.4}
+
+/* ===== Tool Sections ===== */
+.tool-section{display:none;padding:30px 0}
+.tool-section.active{display:block}
+.tool-section h2{font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.tool-desc{color:#64748b;margin-bottom:20px;font-size:.9rem}
+.tool-body{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px}
+
+/* ===== Buttons ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 22px;border-radius:10px;border:none;
+  font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;
+  background:#6366f1;color:#fff
+}
+.btn:hover{background:#4f46e5;transform:translateY(-1px)}
+.btn-secondary{background:#f1f5f9;color:#1a1a2e}
+.btn-secondary:hover{background:#e2e8f0;transform:none}
+.btn-ghost{background:transparent;color:#64748b;border:1px solid #e2e8f0}
+.btn-ghost:hover{background:#f8fafc;transform:none}
+.tool-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.status{font-size:.85rem;margin-left:8px;padding:4px 10px;border-radius:6px;display:inline-block}
+
+/* ===== Textarea ===== */
+textarea{
+  width:100%;padding:12px 14px;border:1px solid #e2e8f0;border-radius:10px;
+  font-family:'SF Mono','Consolas','Courier New',monospace;font-size:.85rem;
+  resize:vertical;transition:border-color .2s;background:#fafbfc
+}
+textarea:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+
+/* ===== Tool Rows ===== */
+.tool-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tool-col label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:#475569}
+
+/* ===== Image Tool ===== */
+.upload-zone{
+  border:2px dashed #cbd5e1;border-radius:14px;padding:48px 24px;
+  text-align:center;cursor:pointer;transition:.25s;background:#fafbfc
+}
+.upload-zone:hover,.upload-zone.dragover{border-color:#6366f1;background:#eef2ff}
+.upload-icon{font-size:3rem;margin-bottom:8px}
+.upload-hint{font-size:.8rem;color:#94a3b8;margin-top:4px}
+.img-result{margin-top:20px}
+.img-preview-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.img-preview-box{text-align:center}
+.img-preview-box h4{font-size:.85rem;color:#64748b;margin-bottom:6px}
+.img-preview-box img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid #e2e8f0}
+.img-preview-box p{font-size:.8rem;color:#94a3b8;margin-top:4px}
+.img-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.img-controls label{font-size:.9rem;font-weight:500}
+.hidden{display:none!important}
+
+/* ===== Word Counter ===== */
+.wc-textarea{min-height:180px}
+.wc-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:16px}
+.stat-box{
+  background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center
+}
+.stat-num{display:block;font-size:1.6rem;font-weight:700;color:#6366f1}
+.stat-label{font-size:.8rem;color:#64748b;margin-top:2px;display:block}
+
+/* ===== Color Converter ===== */
+.color-input-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.color-input-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:4px;color:#475569}
+.color-input-group input{
+  width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:10px;
+  font-family:'SF Mono',monospace;font-size:.85rem;transition:.2s
+}
+.color-input-group input:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.color-preview{
+  height:100px;border-radius:12px;margin:16px 0;
+  border:1px solid #e2e8f0;transition:background .15s
+}
+
+/* ===== UUID ===== */
+.uuid-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:12px}
+.uuid-controls label{font-size:.9rem;font-weight:500}
+.uuid-controls input[type=number]{width:70px;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:.9rem;text-align:center}
+
+/* ===== QR Code ===== */
+.qr-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:16px}
+.qr-input-group{flex:1;min-width:200px}
+.qr-input-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:4px;color:#475569}
+.qr-input-group input{width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:10px;font-size:.9rem}
+.qr-options select{padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.9rem;background:#fff}
+.qr-result{text-align:center;padding:20px}
+.qr-result img{display:inline-block;margin:0 auto 12px;border-radius:8px}
+
+/* ===== Ads ===== */
+.ad-slot{text-align:center;padding:20px 0}
+.ad-placeholder{
+  background:#f1f5f9;border:1px dashed #cbd5e1;border-radius:10px;
+  padding:20px;color:#94a3b8;font-size:.85rem;max-width:728px;margin:0 auto
+}
+
+/* ===== Footer ===== */
+.site-footer{
+  text-align:center;padding:30px 0;color:#94a3b8;font-size:.82rem;
+  border-top:1px solid #e8ecf1;margin-top:20px
+}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  .hero h1{font-size:1.8rem}
+  .tool-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+  .tool-row{grid-template-columns:1fr}
+  .img-preview-row{grid-template-columns:1fr}
+  .color-input-row{grid-template-columns:1fr}
+  .main-nav{display:none}
+  .main-nav.open{display:flex;flex-direction:column;position:absolute;top:60px;left:0;right:0;
+    background:#fff;padding:12px 20px;border-bottom:1px solid #e8ecf1;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+  .mobile-menu-btn{display:flex}
+}
+
+@media(max-width:480px){
+  .tool-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .tool-card{padding:16px 12px}
+  .tool-icon{width:44px;height:44px;font-size:1.4rem}
+  .wc-stats{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -255,7 +429,770 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script src="js/script.js"></script>
+
+<script>/* ===== Navigation ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  // Tool switching
+  document.querySelectorAll('[data-tool]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const tool = el.dataset.tool;
+      if (tool === 'home') { showHome(); return }
+      const section = document.getElementById('tool-' + tool);
+      if (section) {
+        document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+        section.classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        const navLink = document.querySelector(`.nav-link[data-tool="${tool}"]`);
+        if (!navLink) addNavLink(tool, el.querySelector('h3')?.textContent || tool);
+        document.querySelector(`.nav-link[data-tool="${tool}"]`)?.classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }
+    });
+  });
+
+  function showHome() {
+    document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('tool-home').classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    const homeLink = document.querySelector('.nav-link[data-tool="home"]');
+    if (homeLink) homeLink.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function addNavLink(toolId, label) {
+    const nav = document.getElementById('mainNav');
+    const link = document.createElement('a');
+    link.href = '#'; link.className = 'nav-link'; link.dataset.tool = toolId;
+    link.textContent = label;
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('tool-' + toolId)?.classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+      link.classList.add('active');
+      if (window.innerWidth <= 768) document.getElementById('mainNav')?.classList.remove('open');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+    nav.appendChild(link);
+  }
+
+  // Mobile menu
+  document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+    document.getElementById('mainNav')?.classList.toggle('open');
+  });
+});
+
+/* ===== 1. Image Compressor ===== */
+(function(){
+  const uploadZone = document.getElementById('imgUploadZone');
+  const imgInput = document.getElementById('imgInput');
+  const result = document.getElementById('imgResult');
+  const originalImg = document.getElementById('imgOriginal');
+  const compressedImg = document.getElementById('imgCompressed');
+  const originalInfo = document.getElementById('imgOriginalInfo');
+  const compressedInfo = document.getElementById('imgCompressedInfo');
+  const qualitySlider = document.getElementById('qualitySlider');
+  const qualityLabel = document.getElementById('qualityLabel');
+  const downloadBtn = document.getElementById('downloadImgBtn');
+
+  let currentFile = null;
+  let compressedBlob = null;
+
+  function handleFile(file) {
+    if (!file || !file.type.match(/image\/(png|jpeg|webp)/)) {
+      alert('请上传 PNG / JPG / WebP 格式的图片');
+      return;
+    }
+    currentFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        originalImg.src = e.target.result;
+        originalInfo.textContent = `${file.name} | ${(file.size/1024).toFixed(1)} KB | ${img.width}×${img.height}`;
+        compress(img);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    result.classList.remove('hidden');
+  }
+
+  function compress(img) {
+    const quality = parseInt(qualitySlider.value) / 100;
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    canvas.toBlob(blob => {
+      compressedBlob = blob;
+      compressedImg.src = URL.createObjectURL(blob);
+      const ratio = ((1 - blob.size / currentFile.size) * 100).toFixed(1);
+      compressedInfo.textContent = `${(blob.size/1024).toFixed(1)} KB | ${img.width}×${img.height} | 缩小 ${ratio}%`;
+    }, currentFile.type, quality);
+  }
+
+  uploadZone.addEventListener('click', () => imgInput.click());
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+  uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+  imgInput.addEventListener('change', () => { if (imgInput.files[0]) handleFile(imgInput.files[0]); });
+  qualitySlider.addEventListener('input', () => {
+    qualityLabel.textContent = qualitySlider.value;
+    if (currentFile) {
+      const img = new Image();
+      img.onload = () => compress(img);
+      img.src = originalImg.src;
+    }
+  });
+  downloadBtn.addEventListener('click', () => {
+    if (compressedBlob) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(compressedBlob);
+      const ext = currentFile.name.split('.').pop();
+      a.download = `compressed.${ext}`;
+      a.click();
+    }
+  });
+})();
+
+/* ===== 2. JSON Formatter ===== */
+(function(){
+  const input = document.getElementById('jsonInput');
+  const output = document.getElementById('jsonOutput');
+  const status = document.getElementById('jsonStatus');
+
+  function format() {
+    try {
+      const parsed = JSON.parse(input.value);
+      output.value = JSON.stringify(parsed, null, 2);
+      status.textContent = '✅ 格式化成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  }
+
+  document.getElementById('jsonFormatBtn').addEventListener('click', format);
+  document.getElementById('jsonCompactBtn').addEventListener('click', () => {
+    try {
+      const parsed = JSON.parse(input.value);
+      output.value = JSON.stringify(parsed);
+      status.textContent = '✅ 压缩成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('jsonValidateBtn').addEventListener('click', () => {
+    try {
+      JSON.parse(input.value);
+      status.textContent = '✅ JSON 有效';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('jsonClearBtn').addEventListener('click', () => {
+    input.value = ''; output.value = ''; status.textContent = '';
+  });
+})();
+
+/* ===== 3. Word Counter ===== */
+(function(){
+  const textarea = document.getElementById('wcInput');
+  textarea.addEventListener('input', () => {
+    const text = textarea.value;
+    document.getElementById('wcChars').textContent = text.length;
+    document.getElementById('wcCharsNoSpace').textContent = text.replace(/\s/g, '').length;
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    document.getElementById('wcWords').textContent = words;
+    const lines = text ? text.split('\n').length : 0;
+    document.getElementById('wcLines').textContent = lines;
+    const paras = text ? text.split(/\n\s*\n/).filter(p => p.trim()).length : 0;
+    document.getElementById('wcParas').textContent = paras;
+    const sentences = text ? text.split(/[.!?。！？]+/).filter(s => s.trim()).length : 0;
+    document.getElementById('wcSentences').textContent = sentences;
+  });
+})();
+
+/* ===== 4. Base64 Tool ===== */
+(function(){
+  const input = document.getElementById('b64Input');
+  const output = document.getElementById('b64Output');
+  const status = document.getElementById('b64Status');
+
+  document.getElementById('b64EncodeBtn').addEventListener('click', () => {
+    try {
+      output.value = btoa(unescape(encodeURIComponent(input.value)));
+      status.textContent = '✅ 编码成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('b64DecodeBtn').addEventListener('click', () => {
+    try {
+      output.value = decodeURIComponent(escape(atob(input.value)));
+      status.textContent = '✅ 解码成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ 输入不是有效的 Base64';
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('b64CopyBtn').addEventListener('click', () => {
+    if (output.value) {
+      navigator.clipboard.writeText(output.value);
+      status.textContent = '✅ 已复制';
+      status.style.color = '#059669';
+    }
+  });
+})();
+
+/* ===== 5. UUID Generator ===== */
+(function(){
+  const output = document.getElementById('uuidOutput');
+  const countInput = document.getElementById('uuidCount');
+
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  document.getElementById('uuidGenerateBtn').addEventListener('click', () => {
+    const count = Math.min(Math.max(parseInt(countInput.value) || 1, 1), 100);
+    const uuids = Array.from({length: count}, () => generateUUID());
+    output.value = uuids.join('\n');
+  });
+
+  document.getElementById('uuidCopyBtn').addEventListener('click', () => {
+    if (output.value) navigator.clipboard.writeText(output.value);
+  });
+
+  // Generate on load
+  document.getElementById('uuidGenerateBtn').click();
+})();
+
+/* ===== 6. Color Converter ===== */
+(function(){
+  const hexInput = document.getElementById('colorHex');
+  const rgbInput = document.getElementById('colorRgb');
+  const hslInput = document.getElementById('colorHsl');
+  const preview = document.getElementById('colorPreview');
+
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+  }
+
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0 }
+    else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
+        case g: h = ((b - r) / d + 2); break;
+        case b: h = ((r - g) / d + 4); break;
+      }
+      h /= 6;
+    }
+    return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+  }
+
+  function updateColors(source) {
+    let r, g, b;
+    if (source === 'hex') {
+      const rgb = hexToRgb(hexInput.value);
+      if (!rgb) return;
+      r = rgb.r; g = rgb.g; b = rgb.b;
+    } else if (source === 'rgb') {
+      const match = rgbInput.value.match(/(\d+)/g);
+      if (!match || match.length < 3) return;
+      r = Math.min(255, Math.max(0, parseInt(match[0])));
+      g = Math.min(255, Math.max(0, parseInt(match[1])));
+      b = Math.min(255, Math.max(0, parseInt(match[2])));
+    } else if (source === 'hsl') {
+      const match = hslInput.value.match(/(\d+)/g);
+      if (!match || match.length < 3) return;
+      let h = parseInt(match[0]) / 360, s = parseInt(match[1]) / 100, l = parseInt(match[2]) / 100;
+      if (s === 0) { r = g = b = l * 255 }
+      else {
+        const hue2rgb = (p, q, t) => {
+          if (t < 0) t += 1; if (t > 1) t -= 1;
+          if (t < 1/6) return p + (q - p) * 6 * t;
+          if (t < 1/2) return q;
+          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+          return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = Math.round(hue2rgb(p, q, h + 1/3) * 255);
+        g = Math.round(hue2rgb(p, q, h) * 255);
+        b = Math.round(hue2rgb(p, q, h - 1/3) * 255);
+      }
+    }
+
+    const hex = '#' + [r,g,b].map(x => x.toString(16).padStart(2, '0')).join('');
+    const hsl = rgbToHsl(r, g, b);
+
+    hexInput.value = hex;
+    rgbInput.value = `rgb(${r},${g},${b})`;
+    hslInput.value = `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
+    preview.style.background = hex;
+  }
+
+  hexInput.addEventListener('input', () => updateColors('hex'));
+  rgbInput.addEventListener('input', () => updateColors('rgb'));
+  hslInput.addEventListener('input', () => updateColors('hsl'));
+
+  document.getElementById('colorCopyHex').addEventListener('click', () => navigator.clipboard.writeText(hexInput.value));
+  document.getElementById('colorCopyRgb').addEventListener('click', () => navigator.clipboard.writeText(rgbInput.value));
+  document.getElementById('colorCopyHsl').addEventListener('click', () => navigator.clipboard.writeText(hslInput.value));
+})();
+
+/* ===== 7. QR Code Generator ===== */
+(function(){
+  const input = document.getElementById('qrInput');
+  const sizeSelect = document.getElementById('qrSize');
+  const generateBtn = document.getElementById('qrGenerateBtn');
+  const canvas = document.getElementById('qrCanvas');
+  const qrImage = document.getElementById('qrImage');
+  const downloadBtn = document.getElementById('qrDownloadBtn');
+
+  let currentQRUrl = null;
+
+  generateBtn.addEventListener('click', () => {
+    const text = input.value.trim();
+    if (!text) { alert('请输入内容'); return }
+
+    const size = parseInt(sizeSelect.value);
+    canvas.width = size;
+    canvas.height = size;
+
+    // Generate using QRCode.js
+    canvas.innerHTML = '';
+    const qr = new QRCode(canvas, {
+      text: text,
+      width: size,
+      height: size,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Wait a tick for the QR to render, then capture
+    setTimeout(() => {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        currentQRUrl = canvas.toDataURL('image/png');
+        qrImage.src = currentQRUrl;
+        qrImage.style.width = size + 'px';
+        qrImage.style.height = size + 'px';
+        qrImage.hidden = false;
+        canvas.hidden = true;
+        downloadBtn.classList.remove('hidden');
+      }
+    }, 100);
+  });
+
+  downloadBtn.addEventListener('click', e => {
+    if (currentQRUrl) {
+      const a = document.createElement('a');
+      a.href = currentQRUrl;
+      a.download = 'qrcode.png';
+      a.click();
+    }
+  });
+
+  // Generate initial QR
+  generateBtn.click();
+})();
+</script>/* ===== Navigation ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  // Tool switching
+  document.querySelectorAll('[data-tool]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const tool = el.dataset.tool;
+      if (tool === 'home') { showHome(); return }
+      const section = document.getElementById('tool-' + tool);
+      if (section) {
+        document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+        section.classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        const navLink = document.querySelector(`.nav-link[data-tool="${tool}"]`);
+        if (!navLink) addNavLink(tool, el.querySelector('h3')?.textContent || tool);
+        document.querySelector(`.nav-link[data-tool="${tool}"]`)?.classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }
+    });
+  });
+
+  function showHome() {
+    document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('tool-home').classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    const homeLink = document.querySelector('.nav-link[data-tool="home"]');
+    if (homeLink) homeLink.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function addNavLink(toolId, label) {
+    const nav = document.getElementById('mainNav');
+    const link = document.createElement('a');
+    link.href = '#'; link.className = 'nav-link'; link.dataset.tool = toolId;
+    link.textContent = label;
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('tool-' + toolId)?.classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+      link.classList.add('active');
+      if (window.innerWidth <= 768) document.getElementById('mainNav')?.classList.remove('open');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+    nav.appendChild(link);
+  }
+
+  // Mobile menu
+  document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+    document.getElementById('mainNav')?.classList.toggle('open');
+  });
+});
+
+/* ===== 1. Image Compressor ===== */
+(function(){
+  const uploadZone = document.getElementById('imgUploadZone');
+  const imgInput = document.getElementById('imgInput');
+  const result = document.getElementById('imgResult');
+  const originalImg = document.getElementById('imgOriginal');
+  const compressedImg = document.getElementById('imgCompressed');
+  const originalInfo = document.getElementById('imgOriginalInfo');
+  const compressedInfo = document.getElementById('imgCompressedInfo');
+  const qualitySlider = document.getElementById('qualitySlider');
+  const qualityLabel = document.getElementById('qualityLabel');
+  const downloadBtn = document.getElementById('downloadImgBtn');
+
+  let currentFile = null;
+  let compressedBlob = null;
+
+  function handleFile(file) {
+    if (!file || !file.type.match(/image\/(png|jpeg|webp)/)) {
+      alert('请上传 PNG / JPG / WebP 格式的图片');
+      return;
+    }
+    currentFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        originalImg.src = e.target.result;
+        originalInfo.textContent = `${file.name} | ${(file.size/1024).toFixed(1)} KB | ${img.width}×${img.height}`;
+        compress(img);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    result.classList.remove('hidden');
+  }
+
+  function compress(img) {
+    const quality = parseInt(qualitySlider.value) / 100;
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    canvas.toBlob(blob => {
+      compressedBlob = blob;
+      compressedImg.src = URL.createObjectURL(blob);
+      const ratio = ((1 - blob.size / currentFile.size) * 100).toFixed(1);
+      compressedInfo.textContent = `${(blob.size/1024).toFixed(1)} KB | ${img.width}×${img.height} | 缩小 ${ratio}%`;
+    }, currentFile.type, quality);
+  }
+
+  uploadZone.addEventListener('click', () => imgInput.click());
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+  uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+  imgInput.addEventListener('change', () => { if (imgInput.files[0]) handleFile(imgInput.files[0]); });
+  qualitySlider.addEventListener('input', () => {
+    qualityLabel.textContent = qualitySlider.value;
+    if (currentFile) {
+      const img = new Image();
+      img.onload = () => compress(img);
+      img.src = originalImg.src;
+    }
+  });
+  downloadBtn.addEventListener('click', () => {
+    if (compressedBlob) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(compressedBlob);
+      const ext = currentFile.name.split('.').pop();
+      a.download = `compressed.${ext}`;
+      a.click();
+    }
+  });
+})();
+
+/* ===== 2. JSON Formatter ===== */
+(function(){
+  const input = document.getElementById('jsonInput');
+  const output = document.getElementById('jsonOutput');
+  const status = document.getElementById('jsonStatus');
+
+  function format() {
+    try {
+      const parsed = JSON.parse(input.value);
+      output.value = JSON.stringify(parsed, null, 2);
+      status.textContent = '✅ 格式化成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  }
+
+  document.getElementById('jsonFormatBtn').addEventListener('click', format);
+  document.getElementById('jsonCompactBtn').addEventListener('click', () => {
+    try {
+      const parsed = JSON.parse(input.value);
+      output.value = JSON.stringify(parsed);
+      status.textContent = '✅ 压缩成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('jsonValidateBtn').addEventListener('click', () => {
+    try {
+      JSON.parse(input.value);
+      status.textContent = '✅ JSON 有效';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('jsonClearBtn').addEventListener('click', () => {
+    input.value = ''; output.value = ''; status.textContent = '';
+  });
+})();
+
+/* ===== 3. Word Counter ===== */
+(function(){
+  const textarea = document.getElementById('wcInput');
+  textarea.addEventListener('input', () => {
+    const text = textarea.value;
+    document.getElementById('wcChars').textContent = text.length;
+    document.getElementById('wcCharsNoSpace').textContent = text.replace(/\s/g, '').length;
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    document.getElementById('wcWords').textContent = words;
+    const lines = text ? text.split('\n').length : 0;
+    document.getElementById('wcLines').textContent = lines;
+    const paras = text ? text.split(/\n\s*\n/).filter(p => p.trim()).length : 0;
+    document.getElementById('wcParas').textContent = paras;
+    const sentences = text ? text.split(/[.!?。！？]+/).filter(s => s.trim()).length : 0;
+    document.getElementById('wcSentences').textContent = sentences;
+  });
+})();
+
+/* ===== 4. Base64 Tool ===== */
+(function(){
+  const input = document.getElementById('b64Input');
+  const output = document.getElementById('b64Output');
+  const status = document.getElementById('b64Status');
+
+  document.getElementById('b64EncodeBtn').addEventListener('click', () => {
+    try {
+      output.value = btoa(unescape(encodeURIComponent(input.value)));
+      status.textContent = '✅ 编码成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ ' + e.message;
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('b64DecodeBtn').addEventListener('click', () => {
+    try {
+      output.value = decodeURIComponent(escape(atob(input.value)));
+      status.textContent = '✅ 解码成功';
+      status.style.color = '#059669';
+    } catch(e) {
+      status.textContent = '❌ 输入不是有效的 Base64';
+      status.style.color = '#dc2626';
+    }
+  });
+  document.getElementById('b64CopyBtn').addEventListener('click', () => {
+    if (output.value) {
+      navigator.clipboard.writeText(output.value);
+      status.textContent = '✅ 已复制';
+      status.style.color = '#059669';
+    }
+  });
+})();
+
+/* ===== 5. UUID Generator ===== */
+(function(){
+  const output = document.getElementById('uuidOutput');
+  const countInput = document.getElementById('uuidCount');
+
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  document.getElementById('uuidGenerateBtn').addEventListener('click', () => {
+    const count = Math.min(Math.max(parseInt(countInput.value) || 1, 1), 100);
+    const uuids = Array.from({length: count}, () => generateUUID());
+    output.value = uuids.join('\n');
+  });
+
+  document.getElementById('uuidCopyBtn').addEventListener('click', () => {
+    if (output.value) navigator.clipboard.writeText(output.value);
+  });
+
+  // Generate on load
+  document.getElementById('uuidGenerateBtn').click();
+})();
+
+/* ===== 6. Color Converter ===== */
+(function(){
+  const hexInput = document.getElementById('colorHex');
+  const rgbInput = document.getElementById('colorRgb');
+  const hslInput = document.getElementById('colorHsl');
+  const preview = document.getElementById('colorPreview');
+
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+  }
+
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0 }
+    else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
+        case g: h = ((b - r) / d + 2); break;
+        case b: h = ((r - g) / d + 4); break;
+      }
+      h /= 6;
+    }
+    return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+  }
+
+  function updateColors(source) {
+    let r, g, b;
+    if (source === 'hex') {
+      const rgb = hexToRgb(hexInput.value);
+      if (!rgb) return;
+      r = rgb.r; g = rgb.g; b = rgb.b;
+    } else if (source === 'rgb') {
+      const match = rgbInput.value.match(/(\d+)/g);
+      if (!match || match.length < 3) return;
+      r = Math.min(255, Math.max(0, parseInt(match[0])));
+      g = Math.min(255, Math.max(0, parseInt(match[1])));
+      b = Math.min(255, Math.max(0, parseInt(match[2])));
+    } else if (source === 'hsl') {
+      const match = hslInput.value.match(/(\d+)/g);
+      if (!match || match.length < 3) return;
+      let h = parseInt(match[0]) / 360, s = parseInt(match[1]) / 100, l = parseInt(match[2]) / 100;
+      if (s === 0) { r = g = b = l * 255 }
+      else {
+        const hue2rgb = (p, q, t) => {
+          if (t < 0) t += 1; if (t > 1) t -= 1;
+          if (t < 1/6) return p + (q - p) * 6 * t;
+          if (t < 1/2) return q;
+          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+          return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = Math.round(hue2rgb(p, q, h + 1/3) * 255);
+        g = Math.round(hue2rgb(p, q, h) * 255);
+        b = Math.round(hue2rgb(p, q, h - 1/3) * 255);
+      }
+    }
+
+    const hex = '#' + [r,g,b].map(x => x.toString(16).padStart(2, '0')).join('');
+    const hsl = rgbToHsl(r, g, b);
+
+    hexInput.value = hex;
+    rgbInput.value = `rgb(${r},${g},${b})`;
+    hslInput.value = `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
+    preview.style.background = hex;
+  }
+
+  hexInput.addEventListener('input', () => updateColors('hex'));
+  rgbInput.addEventListener('input', () => updateColors('rgb'));
+  hslInput.addEventListener('input', () => updateColors('hsl'));
+
+  document.getElementById('colorCopyHex').addEventListener('click', () => navigator.clipboard.writeText(hexInput.value));
+  document.getElementById('colorCopyRgb').addEventListener('click', () => navigator.clipboard.writeText(rgbInput.value));
+  document.getElementById('colorCopyHsl').addEventListener('click', () => navigator.clipboard.writeText(hslInput.value));
+})();
+
+/* ===== 7. QR Code Generator (using API) ===== */
+(function(){
+  const input = document.getElementById('qrInput');
+  const sizeSelect = document.getElementById('qrSize');
+  const generateBtn = document.getElementById('qrGenerateBtn');
+  const canvas = document.getElementById('qrCanvas');
+  const qrImage = document.getElementById('qrImage');
+  const downloadBtn = document.getElementById('qrDownloadBtn');
+
+  let currentQRUrl = null;
+
+  generateBtn.addEventListener('click', () => {
+    const text = input.value.trim();
+    if (!text) { alert('请输入内容'); return }
+    const size = parseInt(sizeSelect.value);
+    const apiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=' + size + 'x' + size + '&data=' + encodeURIComponent(text);
+    currentQRUrl = apiUrl;
+    qrImage.src = apiUrl;
+    qrImage.style.width = size + 'px';
+    qrImage.style.height = size + 'px';
+    qrImage.hidden = false;
+    canvas.hidden = true;
+    downloadBtn.classList.remove('hidden');
+  });
+
+  downloadBtn.addEventListener('click', e => {
+    if (currentQRUrl) {
+      fetch(currentQRUrl).then(resp => resp.blob()).then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'qrcode.png';
+        a.click();
+      });
+    }
+  });
+
+  generateBtn.click();
+})();
+</script>
 </body>
 </html>
