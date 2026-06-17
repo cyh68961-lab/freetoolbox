@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreeToolBox - 免费在线工具集</title>
+<meta name="description" content="免费的在线实用工具集：图片压缩、JSON格式化、字数统计、Base64编解码、UUID生成、颜色转换、二维码生成。无需下载，无需注册。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a href="#" class="logo">Free<span>ToolBox</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#" class="nav-link active" data-tool="home">Home</a>
+    </nav>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Ad Placeholder Top -->
+  <div class="ad-slot ad-top">
+    <div class="ad-placeholder">AdSense Ad — 728x90</div>
+  </div>
+
+  <!-- Home Section -->
+  <section id="tool-home" class="tool-section active">
+    <div class="hero">
+      <h1>免费在线工具集</h1>
+      <p class="hero-sub">无需下载 · 无需注册 · 完全免费</p>
+      <div class="tool-grid">
+        <a href="#" class="tool-card" data-tool="image-compressor">
+          <div class="tool-icon">🖼️</div>
+          <h3>图片压缩</h3>
+          <p>压缩 PNG / JPEG / WebP，可调质量</p>
+        </a>
+        <a href="#" class="tool-card" data-tool="json-formatter">
+          <div class="tool-icon">{ }</div>
+          <h3>JSON 格式化</h3>
+          <p>格式化、验证、压缩 JSON</p>
+        </a>
+        <a href="#" class="tool-card" data-tool="word-counter">
+          <div class="tool-icon">📝</div>
+          <h3>字数统计</h3>
+          <p>统计字数、字符数、行数</p>
+        </a>
+        <a href="#" class="tool-card" data-tool="base64">
+          <div class="tool-icon">🔐</div>
+          <h3>Base64 工具</h3>
+          <p>Base64 编码 / 解码</p>
+        </a>
+        <a href="#" class="tool-card" data-tool="uuid">
+          <div class="tool-icon">🔑</div>
+          <h3>UUID 生成器</h3>
+          <p>批量生成 UUID v4</p>
+        </a>
+        <a href="#" class="tool-card" data-tool="color-converter">
+          <div class="tool-icon">🎨</div>
+          <h3>颜色转换</h3>
+          <p>HEX / RGB / HSL 互转</p>
+        </a>
+        <a href="#" class="tool-card" data-tool="qrcode">
+          <div class="tool-icon">📱</div>
+          <h3>二维码生成</h3>
+          <p>文本 / URL 生成二维码</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Compressor -->
+  <section id="tool-image-compressor" class="tool-section">
+    <h2>🖼️ 图片压缩</h2>
+    <p class="tool-desc">上传图片，调整质量，在线压缩。所有处理均在浏览器本地完成，不上传服务器。</p>
+    <div class="tool-body">
+      <div class="upload-zone" id="imgUploadZone">
+        <div class="upload-icon">📤</div>
+        <p>拖拽图片到此处，或点击选择文件</p>
+        <p class="upload-hint">支持 JPG / PNG / WebP，最大 20MB</p>
+        <input type="file" id="imgInput" accept="image/*" hidden>
+      </div>
+      <div id="imgResult" class="img-result hidden">
+        <div class="img-preview-row">
+          <div class="img-preview-box">
+            <h4>原图</h4>
+            <img id="imgOriginal" alt="">
+            <p id="imgOriginalInfo"></p>
+          </div>
+          <div class="img-preview-box">
+            <h4>压缩后</h4>
+            <img id="imgCompressed" alt="">
+            <p id="imgCompressedInfo"></p>
+          </div>
+        </div>
+        <div class="img-controls">
+          <label>压缩质量: <span id="qualityLabel">80</span>%</label>
+          <input type="range" id="qualitySlider" min="10" max="100" value="80">
+          <button class="btn" id="downloadImgBtn">⬇ 下载压缩后的图片</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JSON Formatter -->
+  <section id="tool-json-formatter" class="tool-section">
+    <h2>{ } JSON 格式化</h2>
+    <p class="tool-desc">格式化、验证、压缩 JSON 数据。</p>
+    <div class="tool-body">
+      <div class="tool-row">
+        <div class="tool-col">
+          <label>输入 JSON</label>
+          <textarea id="jsonInput" rows="10" placeholder='{"name": "test","version": 1}'></textarea>
+        </div>
+        <div class="tool-col">
+          <label>输出</label>
+          <textarea id="jsonOutput" rows="10" readonly placeholder="结果将显示在此处"></textarea>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button class="btn" id="jsonFormatBtn">格式化</button>
+        <button class="btn btn-secondary" id="jsonCompactBtn">压缩</button>
+        <button class="btn btn-secondary" id="jsonValidateBtn">验证</button>
+        <button class="btn btn-ghost" id="jsonClearBtn">清空</button>
+        <span id="jsonStatus" class="status"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Word Counter -->
+  <section id="tool-word-counter" class="tool-section">
+    <h2>📝 字数统计</h2>
+    <p class="tool-desc">实时统计文本的字数、字符数（含/不含空格）、行数、段落数。</p>
+    <div class="tool-body">
+      <textarea id="wcInput" rows="12" placeholder="在此输入或粘贴文本..." class="wc-textarea"></textarea>
+      <div class="wc-stats">
+        <div class="stat-box"><span class="stat-num" id="wcChars">0</span><span class="stat-label">字符（含空格）</span></div>
+        <div class="stat-box"><span class="stat-num" id="wcCharsNoSpace">0</span><span class="stat-label">字符（不含空格）</span></div>
+        <div class="stat-box"><span class="stat-num" id="wcWords">0</span><span class="stat-label">字数</span></div>
+        <div class="stat-box"><span class="stat-num" id="wcLines">0</span><span class="stat-label">行数</span></div>
+        <div class="stat-box"><span class="stat-num" id="wcParas">0</span><span class="stat-label">段落</span></div>
+        <div class="stat-box"><span class="stat-num" id="wcSentences">0</span><span class="stat-label">句子</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Base64 Tool -->
+  <section id="tool-base64" class="tool-section">
+    <h2>🔐 Base64 工具</h2>
+    <p class="tool-desc">Base64 编码与解码。</p>
+    <div class="tool-body">
+      <div class="tool-row">
+        <div class="tool-col">
+          <label>输入文本</label>
+          <textarea id="b64Input" rows="8" placeholder="输入要编码或解码的文本..."></textarea>
+        </div>
+        <div class="tool-col">
+          <label>输出</label>
+          <textarea id="b64Output" rows="8" readonly></textarea>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button class="btn" id="b64EncodeBtn">编码 →</button>
+        <button class="btn btn-secondary" id="b64DecodeBtn">← 解码</button>
+        <button class="btn btn-ghost" id="b64CopyBtn">复制结果</button>
+        <span id="b64Status" class="status"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- UUID Generator -->
+  <section id="tool-uuid" class="tool-section">
+    <h2>🔑 UUID 生成器</h2>
+    <p class="tool-desc">批量生成 UUID v4（随机 UUID）。</p>
+    <div class="tool-body">
+      <div class="uuid-controls">
+        <label>生成数量: <input type="number" id="uuidCount" value="5" min="1" max="100"></label>
+        <button class="btn" id="uuidGenerateBtn">生成</button>
+        <button class="btn btn-ghost" id="uuidCopyBtn">复制全部</button>
+      </div>
+      <textarea id="uuidOutput" rows="10" readonly></textarea>
+    </div>
+  </section>
+
+  <!-- Color Converter -->
+  <section id="tool-color-converter" class="tool-section">
+    <h2>🎨 颜色转换</h2>
+    <p class="tool-desc">在 HEX、RGB、HSL 之间互相转换颜色值。</p>
+    <div class="tool-body">
+      <div class="color-input-row">
+        <div class="color-input-group">
+          <label>HEX</label>
+          <input type="text" id="colorHex" placeholder="#FF6600" value="#FF6600">
+        </div>
+        <div class="color-input-group">
+          <label>RGB</label>
+          <input type="text" id="colorRgb" placeholder="rgb(255,102,0)" value="rgb(255,102,0)">
+        </div>
+        <div class="color-input-group">
+          <label>HSL</label>
+          <input type="text" id="colorHsl" placeholder="hsl(24,100%,50%)" value="hsl(24,100%,50%)">
+        </div>
+      </div>
+      <div class="color-preview" id="colorPreview" style="background:#FF6600"></div>
+      <div class="tool-actions">
+        <button class="btn btn-secondary" id="colorCopyHex">复制 HEX</button>
+        <button class="btn btn-secondary" id="colorCopyRgb">复制 RGB</button>
+        <button class="btn btn-secondary" id="colorCopyHsl">复制 HSL</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QR Code Generator -->
+  <section id="tool-qrcode" class="tool-section">
+    <h2>📱 二维码生成</h2>
+    <p class="tool-desc">输入文本或 URL，生成可下载的二维码 PNG。</p>
+    <div class="tool-body">
+      <div class="qr-row">
+        <div class="qr-input-group">
+          <label>输入内容</label>
+          <input type="text" id="qrInput" placeholder="https://example.com" value="https://freetoolbox.example.com">
+        </div>
+        <div class="qr-options">
+          <label>尺寸: <select id="qrSize">
+            <option value="128">128×128</option>
+            <option value="256" selected>256×256</option>
+            <option value="512">512×512</option>
+            <option value="1024">1024×1024</option>
+          </select></label>
+        </div>
+        <button class="btn" id="qrGenerateBtn">生成二维码</button>
+      </div>
+      <div id="qrResult" class="qr-result">
+        <canvas id="qrCanvas" hidden></canvas>
+        <img id="qrImage" alt="QR Code">
+        <a id="qrDownloadBtn" class="btn btn-secondary hidden" download="qrcode.png">⬇ 下载 PNG</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ad Placeholder Bottom -->
+  <div class="ad-slot ad-bottom">
+    <div class="ad-placeholder">AdSense Ad — 728x90</div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© 2026 FreeToolBox. 所有处理在浏览器本地完成，数据不会上传至服务器。</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
